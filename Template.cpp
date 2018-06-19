@@ -31,8 +31,9 @@ string Template::Replace(string old){
         regex_search(hi,sm2,VARIABLE_VALUE_REGEX);
         string variablevalue = sm2[0];
         variablevalue.erase(0,1);
-        if(index != string::npos){
+        while(index != string::npos){
             newstr.replace(index,length,variablevalue);
+            index = newstr.find("{{"+variablename+"}}");
         }
         strr = sm.suffix();
     }
