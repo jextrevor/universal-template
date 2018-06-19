@@ -22,14 +22,19 @@ string Template::Replace(string old){
     smatch sm;
     string strr = old;
     while(regex_search(strr,sm,VARIABLE_REGEX)){
-        cout << sm[0] << endl;
         smatch sm2;
         string hi = sm[0];
         regex_search(hi,sm2,VARIABLE_NAME_REGEX);
-        cout << sm2[0] << endl;
+        string variablename = sm2[0];
+        size_t index = newstr.find("{{"+variablename+"}}");
+        size_t length = ("{{"+variablename+"}}").length();
         regex_search(hi,sm2,VARIABLE_VALUE_REGEX);
-        cout << sm2[0] << endl;
+        string variablevalue = sm2[0];
+        variablevalue.erase(0,1);
+        if(index != string::npos){
+            newstr.replace(index,length,variablevalue);
+        }
         strr = sm.suffix();
     }
-    return old;
+    return newstr;
 }
